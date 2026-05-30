@@ -1,139 +1,239 @@
-DiseasesEaseAI
-DiseasesEaseAI is an AI-powered application designed to assist healthcare providers by automating the analysis of audio consultations. The system supports recording, transcription, and disease prediction using a simple and intuitive graphical user interface (GUI).
+<div align="center">
 
-Features
-Audio Recording: Record consultations directly in the app.
-Speech-to-Text: Convert audio recordings to text using transcription.
-Disease Prediction: Analyze transcripts for potential diseases with probabilities.
-Session Management: Manage multiple chat sessions with storage and retrieval.
-Dark Mode: Modern and visually appealing UI with dark mode colors.
-Customizable Styles: Store UI styles (e.g., colors) in external files for easy customization.
+# 🩺 SymptomsEase AI
 
-Supported Diseases
-SymptomEaseAI currently predicts the following 7 diseases based on the recorded symptoms:
+### Audio-Based Health Screening with Machine Learning
 
-        1: 'Upper Respiratory Tract Infection',
-        2: 'Dermatitis',
-        3: 'Gastritis',
-        4: 'Rhinitis',
-        5: 'Viral Hepatitis',
-        6: 'Enteritis',
-        7: 'Pneumonia'
+A Python machine-learning pipeline that transforms raw audio recordings into health-condition predictions through **signal processing**, **acoustic feature extraction**, and **classical ML classification**.
 
-Installation
-Prerequisites
-Python 3.7 or higher
-Required Python packages: Pillow, tkinter, threading, datetime, and any AI/ML packages for transcription and prediction.
-Tools for packaging as .exe: pyinstaller
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white)
+![NumPy](https://img.shields.io/badge/NumPy-013243?style=for-the-badge&logo=numpy&logoColor=white)
+![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white)
+![License: MIT](https://img.shields.io/badge/License-MIT-3DA639?style=for-the-badge)
+![Status](https://img.shields.io/badge/status-senior%20project-0A66C2?style=for-the-badge)
 
-Steps
-1. Clone this repository: 
-git clone https://github.com/SymptomsEaseAi.git
-cd DiseasesEaseAI
+</div>
 
-2. Install dependencies:
+---
+
+## 📑 Table of Contents
+
+- [Overview](#-overview)
+- [Key Features](#-key-features)
+- [System Architecture & ML Pipeline](#️-system-architecture--ml-pipeline)
+- [Tech Stack](#-tech-stack)
+- [Project Structure](#-project-structure)
+- [Installation & Setup](#️-installation--setup)
+- [Usage](#️-usage)
+- [Dataset](#️-dataset)
+- [Results](#-results)
+- [Roadmap](#️-roadmap)
+- [Contributing](#-contributing)
+- [License](#-license)
+- [Author](#-author)
+
+---
+
+## 🔍 Overview
+
+**SymptomsEase AI** is my graduation (senior) project from the **University of Jeddah**. It explores how everyday audio recordings can support **fast, low-cost, and accessible preliminary health screening**.
+
+The system takes a short audio sample, cleans and processes the signal, extracts meaningful acoustic features, and feeds them into trained machine-learning models that output a health-condition prediction with a confidence score. The goal is to demonstrate a complete, reproducible ML workflow — from raw `.wav` files all the way to an interpretable result — while bridging the gap between **digital signal processing** and **applied machine learning**.
+
+> ⚠️ **Medical Disclaimer:** This project is an **academic proof of concept**, not a certified medical device. It is intended strictly for research and educational purposes and must **never** be used for real clinical diagnosis or to replace professional medical advice.
+
+<!-- TODO: Add 1–2 sentences naming the exact condition(s) your model screens for
+     (e.g., respiratory conditions, cough classification, voice biomarkers). -->
+
+---
+
+## ✨ Key Features
+
+- 🎙️ **End-to-end audio pipeline** — from raw recordings to predictions in a single, reproducible flow.
+- 🌊 **Robust signal preprocessing** — resampling, silence trimming, noise reduction, and normalization for consistent inputs.
+- 🧠 **Rich acoustic feature extraction** — MFCCs, spectral features (centroid, roll-off, bandwidth), zero-crossing rate, and chroma.
+- 📊 **Classical ML classification** — trained and benchmarked with Scikit-learn estimators.
+- 📈 **Transparent evaluation** — accuracy, precision, recall, F1-score, and a confusion matrix for every model.
+- 🧩 **Modular, extensible codebase** — preprocessing, feature engineering, training, and inference are cleanly separated.
+- 🔁 **Reproducible experiments** — fixed random seeds and a pinned dependency list.
+
+---
+
+## 🏗️ System Architecture & ML Pipeline
+
+The project follows a classic, stage-based machine-learning pipeline:
+
+```mermaid
+flowchart LR
+    A["🎙️ Audio Input<br/>(.wav / .mp3)"] --> B["🧹 Preprocessing<br/>Resampling · Trimming · Noise Reduction · Normalization"]
+    B --> C["🌊 Signal Processing<br/>Framing · Windowing · FFT / STFT"]
+    C --> D["🧠 Feature Extraction<br/>MFCCs · Spectral · Chroma · ZCR"]
+    D --> E["🧮 Feature Engineering<br/>NumPy · Pandas"]
+    E --> F["🤖 ML Model<br/>Scikit-learn Classifier"]
+    F --> G["📈 Evaluation<br/>Accuracy · Precision · Recall · F1"]
+    F --> H["✅ Prediction<br/>Condition + Confidence"]
+```
+
+**Stage breakdown**
+
+1. **Audio Input** — accepts standard audio formats and loads them as time-series signals.
+2. **Preprocessing** — standardizes sample rate, removes silence and background noise, and normalizes amplitude so every sample is comparable.
+3. **Signal Processing** — splits the signal into overlapping frames, applies windowing, and converts to the frequency domain (FFT/STFT).
+4. **Feature Extraction** — derives a compact numerical fingerprint of each recording (MFCCs and spectral/temporal descriptors).
+5. **Feature Engineering** — aggregates and structures features into a clean feature matrix using NumPy and Pandas.
+6. **Model Training & Inference** — trains Scikit-learn classifiers, persists the best model, and serves predictions on new audio.
+7. **Evaluation** — reports standard classification metrics and a confusion matrix to validate performance.
+
+---
+
+## 🧰 Tech Stack
+
+| Category | Technologies |
+| :--- | :--- |
+| **Language** | Python 3.9+ |
+| **Data Handling** | NumPy, Pandas |
+| **Machine Learning** | Scikit-learn |
+| **Audio & Signal Processing** | Librosa, SciPy |
+| **Visualization** | Matplotlib, Seaborn |
+| **Environment** | venv, pip |
+| **Experimentation** | Jupyter Notebook |
+
+> 🔧 *Trim or extend this list to match exactly what your repository uses.*
+
+---
+
+## 📁 Project Structure
+
+```text
+SymptomsEaseAi/
+├── data/
+│   ├── raw/                # Original audio recordings
+│   └── processed/          # Cleaned / feature-extracted data
+├── notebooks/              # Exploratory analysis & experiments
+├── src/
+│   ├── preprocessing.py    # Audio loading, cleaning, normalization
+│   ├── features.py         # Feature extraction (MFCCs, spectral, etc.)
+│   ├── train.py            # Model training & persistence
+│   ├── evaluate.py         # Metrics & confusion matrix
+│   └── predict.py          # Inference on new audio
+├── models/                 # Saved/trained model artifacts
+├── results/                # Plots, metrics, reports
+├── requirements.txt        # Pinned dependencies
+├── LICENSE
+└── README.md
+```
+
+> 📌 *Adjust the tree to reflect your actual files and folders.*
+
+---
+
+## ⚙️ Installation & Setup
+
+### Prerequisites
+
+- Python **3.9+**
+- `pip` and `git`
+
+### Steps
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/FerasAlhkodari/SymptomsEaseAi.git
+cd SymptomsEaseAi
+
+# 2. Create and activate a virtual environment
+python -m venv venv
+
+# On macOS / Linux:
+source venv/bin/activate
+# On Windows (PowerShell):
+venv\Scripts\Activate.ps1
+
+# 3. Install dependencies
 pip install -r requirements.txt
+```
 
-3. Run the app:
-python ui_main.py
+---
 
+## ▶️ Usage
 
-File Structure 
-DiseasesEaseAI/
-├── audio_handler.py    # Handles audio recording and transcription
-├── predictor.py        # Handles disease prediction
-├── ui_main.py          # Main user interface (entry point)
-├── models/             # AI models and Vosk model storage
-│   ├── trained_model.h5
-│   ├── features.pkl
-│   ├── scaler.pkl
-│   ├── vosk-model/
-├── data/               # Temporary storage for audio and transcriptions
-│   ├── session_audio/
-│   │   ├── session_1_audio.wav
-│   │   └── session_2_audio.wav
-│   ├── session_transcriptions/
-│       ├── session_1_transcription.txt
-│       └── session_2_transcription.txt
-|---Docs/
-├── requirements.txt    # Dependency list for seamless installation
-├── README.md           # Documentation
-└── tests/              # Unit and integration tests
+```bash
+# Train the model
+python src/train.py --data data/processed --out models/
 
+# Evaluate a trained model
+python src/evaluate.py --model models/best_model.pkl --data data/processed
 
-# Usage
-Start the Application: Run ui_main.py to launch the DiseasesEaseAI interface.
+# Run a prediction on a single audio file
+python src/predict.py --model models/best_model.pkl --audio path/to/sample.wav
+```
 
-Create a New Session:
+> 🛠️ *Replace the script names and arguments with your real CLI interface.*
 
-Click "New Session" in the sidebar.
-Enter session details as prompted.
-Record Audio:
+---
 
-Click the "Record" button to start recording.
-Click "Stop" to save the audio file.
-Analyze Audio:
+## 🗂️ Dataset
 
-Click the "Analyze" button after recording to transcribe and predict diseases.
-View Results:
+<!-- TODO: Describe your dataset here. -->
 
-The transcription and predictions will appear in the chat area.
-The session data is saved for future access.
-Manage Sessions:
+- **Source:** *(e.g., public dataset name + link, or a brief note if private/academic)*
+- **Size:** *(number of samples / total hours of audio)*
+- **Classes:** *(the conditions/labels your model distinguishes)*
+- **Format:** *(sample rate, file type, mono/stereo)*
 
-Use the sidebar to switch between sessions, delete sessions, or clear all sessions.
+*If the dataset cannot be shared publicly, state that here and describe its structure so others can reproduce the pipeline with their own data.*
 
-Technical Details
-Core Components
-GUI:
+---
 
-Built with tkinter for simplicity and portability.
-UI components styled using Pillow for icons and external JSON for colors.
-Audio Handling:
+## 📊 Results
 
-audio_handler.py manages audio recording and transcription using custom libraries or external APIs.
-AI Prediction:
+| Model | Accuracy | Precision | Recall | F1-Score |
+| :--- | :---: | :---: | :---: | :---: |
+| *Model A* | — | — | — | — |
+| *Model B* | — | — | — | — |
 
-predictor.py analyzes the transcriptions using a trained machine learning model.
-Session Management:
+> 📈 *Fill in this table with your actual results, and consider adding a confusion-matrix image from the `results/` folder for extra impact.*
 
-Session data (audio, transcriptions, predictions) is stored in the data/sessions/ directory.
-Metadata is saved in sessions.json.
-Custom Styles:
+---
 
-UI colors are defined in ./ui/styles/colors.json for easy modification.
+## 🛣️ Roadmap
 
-Technical Requirements
-System Requirements
-Operating System:
-Windows 10 or higher
-Processor: Intel i5 or equivalent (minimum), i7 or equivalent (recommended)
-RAM:
-Minimum: 4 GB
-Recommended: 8 GB or higher
-Disk Space: At least 500 MB free for application files and dependencies
-Audio Hardware: A functional microphone for recording consultations.
+- [ ] Expand the dataset and balance class distribution
+- [ ] Benchmark additional models (ensemble methods, gradient boosting)
+- [ ] Add a lightweight REST API for inference
+- [ ] Build a simple web/mobile demo interface
+- [ ] Containerize the application with Docker
 
+---
 
-5. FAQs and Troubleshooting
-Q: Why is the app not recording audio?
-Ensure your microphone is connected and permissions are granted.
-Check your system's audio input settings.
-Q: How do I update the application's UI colors?
-Open ./ui/styles/colors.json in a text editor.
-Modify the JSON values (e.g., background, primary).
-Restart the application to apply changes.
-Q: How do I update the AI model for disease prediction?
-Replace the predictor module or AI model file with the new version.
-Ensure compatibility with the current application.
-Q: What if the transcription is inaccurate?
-Check your microphone quality and reduce background noise.
-Consider using an advanced speech-to-text library or API.
-Q: How do I recover a deleted session?
-Sessions cannot be recovered once deleted. Ensure to back up important data.
+## 🤝 Contributing
 
-6. Contact Information
-If you encounter any issues or need assistance, contact:
+Contributions, issues, and feature requests are welcome.
 
-Support Email: ferasalkhodari51@gmail.com
-Documentation and Updates: SymptomsEaseAi.github
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m "Add amazing feature"`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+---
+
+## 📄 License
+
+Distributed under the **MIT License**. See the [`LICENSE`](LICENSE) file for details.
+
+---
+
+## 👤 Author
+
+**Feras Alkhodari** — Backend Engineer · DevOps · Application Security
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/feraswe/)
+[![Email](https://img.shields.io/badge/Email-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](mailto:me@feraswe.com)
+[![Portfolio](https://img.shields.io/badge/Portfolio-feraswe.com-111111?style=for-the-badge&logo=googlechrome&logoColor=white)](https://feraswe.com)
+
+<div align="center">
+<br>
+<sub>Built as a graduation project at the University of Jeddah 🎓</sub>
+</div>
