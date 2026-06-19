@@ -1,0 +1,25 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# --- PyInstaller build output (regenerated; too large for git) ---
+build/
+dist/
+
+# --- Large distributable: host on GitHub Releases, do NOT commit ---
+*.zip
+
+# --- Keras Tuner search artifacts ---
+untitled_project/
+
+# --- Local runtime data (sessions / recordings / transcripts) ---
+data/sessions/
+data/session_audio/
+sessions.json
+
+# --- OS / editor cruft ---
+Thumbs.db
+.DS_Store

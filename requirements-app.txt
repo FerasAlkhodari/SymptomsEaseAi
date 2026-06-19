@@ -1,0 +1,27 @@
+# SymptomsEase AI — ACTUAL working dependencies (Windows, Python 3.10).
+#
+# IMPORTANT: the original requirements.txt is INCORRECT. It pins
+# tensorflow==2.9.1, but models/trained_model.h5 was saved with Keras 3.6.0 and
+# CANNOT be loaded by TF 2.9 (it fails with "Unrecognized keyword 'batch_shape'").
+# The versions below are verified to load the model and run the full
+# record -> transcribe -> predict pipeline.
+#
+# Setup:
+#   py -3.10 -m venv .venv
+#   .venv\Scripts\python -m pip install -r requirements-app.txt
+#
+# Run from source:
+#   .venv\Scripts\python ui_main.py
+#
+# (tkinter is required and ships with the official python.org Windows installer;
+#  the "py install 3.x" minimal runtimes do NOT include it.)
+
+tensorflow==2.18.0        # bundles Keras 3.12 — loads the Keras-3 model
+scikit-learn==1.6.1       # loads scaler.pkl (MinMaxScaler, 2730 features)
+vosk==0.3.45              # offline speech-to-text
+PyAudio==0.2.13           # microphone capture
+Pillow==9.2.0             # UI image handling
+
+# To rebuild the distributable .exe:
+#   .venv\Scripts\python -m pip install pyinstaller==6.21.0
+#   .venv\Scripts\python -m PyInstaller --noconfirm SymptomsEaseAI.spec
