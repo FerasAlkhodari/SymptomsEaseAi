@@ -2,8 +2,8 @@
 (function () {
   "use strict";
 
-  // Replace with your hosted ZIP (e.g. a GitHub Releases URL) before publishing.
-  var DOWNLOAD_URL = "SymptomsEaseAI-Windows.zip";
+
+  var DOWNLOAD_URL = "https://github.com/FerasAlkhodari/SymptomsEaseAi/releases/download/v1.0.0/SymptomsEaseAI-Windows.zip";
 
   var SHOTS = [
     { src: "assets/screens/01-empty.png" },
